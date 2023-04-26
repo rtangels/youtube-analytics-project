@@ -29,6 +29,45 @@ class Channel:
         self.__url = ''
         self.__description = ''
 
+    def __str__(self):
+        """Возвращает название и ссылку на канал"""
+        return f"{self.title} ({self.url})"
+
+    def __eq__(self, other):
+        """Возвращает проверку на равенство
+          каналов по количеству подписчиков"""
+        return self.subscriber_count == other.subscriber_count
+
+    def __add__(self, other):
+        """Возвращае  сложение
+    количества подписчиков на каналах"""
+        return self.subscriber_count + other.subscriber_count
+
+    def __sub__(self, other):
+        """Возвращае  вычитание
+    количества подписчиков на каналах"""
+        return self.subscriber_count - other.subscriber_count
+
+    def __lt__(self, other):
+        """Возвращает проверку меньше ли один канал
+           другого канала по количеству подписчиков"""
+        return self.subscriber_count < other.subscriber_count
+
+    def __le__(self, other):
+        """Возвращает проверку меньше или равен один канал
+              другого канала по количеству подписчиков"""
+        return self.subscriber_count <= other.subscriber_count
+
+    def __gt__(self, other):
+        """Возвращает проверку больше ли один канал
+         другого канала по количеству подписчиков"""
+        return self.subscriber_count > other.subscriber_count
+
+    def __ge__(self, other):
+        """Возвращает проверку больше или равен один канал
+             другого канала по количеству подписчиков"""
+        return self.subscriber_count >= other.subscriber_count
+
     @classmethod
     def get_service(cls):
         """Метод возвращающий объект для работы с YouTube API"""
@@ -102,7 +141,7 @@ class Channel:
     def video_count(self):
         """Возвращает это количество видео на канале"""
         temp_direct = self.get_info()
-        self.__video_count = temp_direct['items'][0]['statistics']['videoCount']
+        self.__video_count = int(temp_direct['items'][0]['statistics']['videoCount'])
         return self.__video_count
 
     @property
@@ -116,7 +155,7 @@ class Channel:
         """Метод получающий инфорамцию о количестве подписчиков,
                 и возвращающий количество подписчиков"""
         temp_direct = self.get_info()
-        self.__subscribers_count = temp_direct['items'][0]['statistics']['subscriberCount']
+        self.__subscribers_count = int(temp_direct['items'][0]['statistics']['subscriberCount'])
         return self.__subscribers_count
 
     @property
@@ -124,8 +163,8 @@ class Channel:
         """Метод получающий инфорамцию о количестве просмотров,
               и возвращающий количество просмотров"""
         temp_direct = self.get_info()
-        self.__views_count = temp_direct['items'][0]['statistics'][
-            'viewCount']
+        self.__views_count = int(temp_direct['items'][0]['statistics'][
+            'viewCount'])
         return self.__views_count
 
     @property
